@@ -45,8 +45,8 @@ First run will create a config file at `~/.config/gpu-passthrough/config.sh` wit
 # Detach NVIDIA from host, prepare for VM
 sudo ./dnv.sh
 
-# VM 会话结束后，将 GPU 还原给宿主机
-# After your VM session ends, restore to host
+# VM 会话结束后，将 GPU 还原给宿主机 (要把 VM 给关机了才能运行)
+# After your VM session ends, restore to host (You must shut down the VM before you can run it.)
 sudo ./rnv.sh
 ```
 
