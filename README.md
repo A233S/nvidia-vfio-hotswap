@@ -111,6 +111,12 @@ This means modules tried to load while devices were absent from the bus. The scr
 
 ---
 
+## 参考资料 / References
+
+- [热切换显卡直通 — Shorin ArchLinux Guide Wiki](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/%E7%83%AD%E5%88%87%E6%8D%A2%E6%98%BE%E5%8D%A1%E7%9B%B4%E9%80%9A) — 主要参考来源 / Main reference
+
+---
+
 ## 关于 / About
 
 最初为 Kubuntu + RTX 5070 Ti 笔记本 GPU 开发
