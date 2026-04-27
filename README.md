@@ -14,6 +14,58 @@ Two scripts to dynamically detach your NVIDIA GPU from the host and pass it thro
 
 ---
 
+## ⚠️ 前提条件 / Prerequisites
+
+在使用这些脚本之前，**必须确保你的桌面环境（DE/WM）运行在非 NVIDIA 显卡上**（例如 Intel/AMD 核显）。如果桌面环境正在使用 NVIDIA 显卡，解绑驱动会导致黑屏或桌面崩溃。
+
+Before using these scripts, **you must ensure your desktop environment (DE/WM) is running on a non-NVIDIA GPU** (e.g., Intel/AMD integrated graphics). If your desktop is using the NVIDIA GPU, detaching the driver will crash your session.
+
+### X11 (Xorg) 配置示例 / X11 (Xorg) Configuration Example
+对于 X11，你可以通过配置强制使用核显并禁用 NVIDIA 屏幕。创建或编辑 `/etc/X11/xorg.conf.d/10-gpu.conf`：
+For X11, you can force the use of the iGPU and disable NVIDIA screens. Create or edit `/etc/X11/xorg.conf.d/10-gpu.conf`:
+
+```apache
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0"
+    Option         "AllowNVIDIAGPUScreens" "false"
+EndSection
+
+Section "Device"
+    Identifier  "Intel"
+    Driver      "modesetting"
+    # 请将此处的 BusID 替换为你自己的 Intel/AMD 核显 PCI 地址
+    # Replace this BusID with your Intel/AMD iGPU PCI address
+    BusID       "PCI:0:2:0"
+    Option      "AccelMethod" "glamor"
+EndSection
+
+Section "Screen"
+    Identifier  "Screen0"
+    Device      "Intel"
+EndSection
+
+Section "ServerFlags"
+    Option "AutoAddDevices" "true"
+    Option "AutoAddGPU" "false"
+EndSection
+```
+
+### Niri (Wayland) 配置示例 / Niri (Wayland) Configuration Example
+对于 Niri 窗口管理器，你可以让其忽略 NVIDIA 的 DRM 设备：
+For the Niri window manager, you can tell it to ignore the NVIDIA DRM devices:
+
+```kdl
+debug {
+    # 请将此处的 pci 地址替换为你自己的 NVIDIA 显卡 PCI 地址
+    # Replace the pci address here with your NVIDIA GPU PCI address
+    ignore-drm-device "/dev/dri/by-path/pci-0000:01:00.0-card"
+    ignore-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
+}
+```
+
+---
+
 ## 特点 / Features
 
 - 激进的进程清理（用 `lsof` 捕获 `fuser` 漏掉的 mmap 引用）/ Aggressive process cleanup (uses `lsof` to catch mmap'd references that `fuser` misses)
