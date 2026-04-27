@@ -21,8 +21,8 @@ Two scripts to dynamically detach your NVIDIA GPU from the host and pass it thro
 Before using these scripts, **you must ensure your desktop environment (DE/WM) is running on a non-NVIDIA GPU** (e.g., Intel/AMD integrated graphics). If your desktop is using the NVIDIA GPU, detaching the driver will crash your session.
 
 ### X11 (Xorg) 配置示例 / X11 (Xorg) Configuration Example
-对于 X11，你可以通过配置强制使用核显并禁用 NVIDIA 屏幕。创建或编辑 `/etc/X11/xorg.conf.d/10-gpu.conf`：
-For X11, you can force the use of the iGPU and disable NVIDIA screens. Create or edit `/etc/X11/xorg.conf.d/10-gpu.conf`:
+对于 X11，你可以通过配置强制使用核显并禁用 NVIDIA 屏幕。创建或编辑 `/etc/X11/xorg.conf`：
+For X11, you can force the use of the iGPU and disable NVIDIA screens. Create or edit `/etc/X11/xorg.conf`:
 
 ```apache
 Section "ServerLayout"
